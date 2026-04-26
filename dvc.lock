@@ -1,0 +1,74 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: data/raw/iris.csv
+      hash: md5
+      md5: 42615765a885ddf54427f12c34a0a070
+      size: 4551
+    - path: src/prepare.py
+      hash: md5
+      md5: 4ad8f67fb889f7283b6defd6a4145f5b
+      size: 718
+    params:
+      params.yaml:
+        prepare:
+          test_size: 0.2
+          random_state: 42
+        train:
+          model: LogisticRegression
+          random_state: 42
+    outs:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: 4dcbaff6ef65a732795d3dd3c26e9df7
+      size: 561
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: b5174c281fd391b84bc959c987e64723
+      size: 2091
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: 52b2f9542fe64d39ae53e77daff1b1ad
+      size: 467
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 21d8bf4b56c476020db67aa96218c84b
+      size: 1849
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/processed/X_test.csv
+      hash: md5
+      md5: 4dcbaff6ef65a732795d3dd3c26e9df7
+      size: 561
+    - path: data/processed/X_train.csv
+      hash: md5
+      md5: b5174c281fd391b84bc959c987e64723
+      size: 2091
+    - path: data/processed/y_test.csv
+      hash: md5
+      md5: 52b2f9542fe64d39ae53e77daff1b1ad
+      size: 467
+    - path: data/processed/y_train.csv
+      hash: md5
+      md5: 21d8bf4b56c476020db67aa96218c84b
+      size: 1849
+    - path: src/train.py
+      hash: md5
+      md5: ad7cd8ead248a7000c289aee900b2682
+      size: 956
+    params:
+      params.yaml:
+        prepare:
+          test_size: 0.2
+          random_state: 42
+        train:
+          model: LogisticRegression
+          random_state: 42
+    outs:
+    - path: model.pkl
+      hash: md5
+      md5: c370f2c2d7af2b514051df3332962a4f
+      size: 962
